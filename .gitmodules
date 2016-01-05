@@ -1,0 +1,3 @@
+[submodule "nginx/nginx_ensite"]
+	path = nginx/nginx_ensite
+	url = https://github.com/perusio/nginx_ensite
