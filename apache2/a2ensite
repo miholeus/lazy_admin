@@ -1,0 +1,35 @@
+#!/bin/bash
+DIR_AVAILABLE=/etc/apache2/sites-available
+DIR_ENABLED=/etc/apache2/sites-enabled
+if test -d /etc/httpd/$DIR_AVAILABLE && test -d $DIR_ENABLED  ; then
+echo "-----------------------------------------------"
+else
+mkdir $DIR_AVAILABLE
+mkdir $DIR_ENABLED
+fi
+
+avail=$DIR_AVAILABLE/$1.conf
+
+site=`ls $DIR_AVAILABLE`
+
+if [ "$#" != "1" ]; then
+    echo "Use script: a2ensite virtual_site"
+    echo -e "\nAvailable virtual hosts:\n$site"
+    exit 0
+else
+
+  if test -e $avail; then
+    sudo ln -s $avail $DIR_ENABLED
+  else
+    echo -e "$avail virtual host does not exist! Please create one!\n$site"
+    exit 0
+  fi
+
+  if test -e $enabled/$1.conf; then
+    echo "Success!! Now restart Apache server: sudo systemctl restart httpd"
+  else
+    echo  -e "Virtual host $avail does not exist!\nPlease see available virtual hosts:\n$site"
+    exit 0
+  fi
+
+fi
